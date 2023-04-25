@@ -12,7 +12,7 @@ find_package(ament_cmake REQUIRED)
 # find_package(<dependency> REQUIRED)
 find_package(Eigen3 REQUIRED)
 
-add_library(${PROJECT_NAME}
+add_library(${PROJECT_NAME} SHARED
     src/sas_clock.cpp
     src/sas_core.cpp
     src/sas_object.cpp
@@ -35,7 +35,12 @@ add_executable(sas_core_example
 add_executable(sas_clock_example
     src/examples/sas_clock_example.cpp)
 
+target_link_libraries(${PROJECT_NAME}
+    -ldqrobotics
+    )
+
 target_link_libraries(sas_core_example
+    -ldqrobotics
     ${PROJECT_NAME}
     )
 
