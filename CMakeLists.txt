@@ -16,6 +16,7 @@ add_library(${PROJECT_NAME} SHARED
     src/sas_clock.cpp
     src/sas_core.cpp
     src/sas_object.cpp
+    src/sas_robot_driver.cpp
     src/eigen3_std_conversions.cpp
     )
 
