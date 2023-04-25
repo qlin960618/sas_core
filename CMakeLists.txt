@@ -16,6 +16,7 @@ add_library(${PROJECT_NAME}
     src/sas_clock.cpp
     src/sas_core.cpp
     src/sas_object.cpp
+    src/eigen3_std_conversions.cpp
     )
 
 ament_target_dependencies(${PROJECT_NAME} Eigen3)
