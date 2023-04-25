@@ -17,6 +17,7 @@ add_library(${PROJECT_NAME} SHARED
     src/sas_core.cpp
     src/sas_object.cpp
     src/sas_robot_driver.cpp
+    src/examples/sas_robot_driver_example.cpp
     src/eigen3_std_conversions.cpp
     )
 
@@ -36,6 +37,9 @@ add_executable(sas_core_example
 add_executable(sas_clock_example
     src/examples/sas_clock_example.cpp)
 
+add_executable(sas_robot_driver_example
+    src/examples/sas_robot_driver_example_main.cpp)
+
 target_link_libraries(${PROJECT_NAME}
     -ldqrobotics
     )
@@ -46,6 +50,10 @@ target_link_libraries(sas_core_example
     )
 
 target_link_libraries(sas_clock_example
+    ${PROJECT_NAME}
+    )
+
+target_link_libraries(sas_robot_driver_example
     ${PROJECT_NAME}
     )
 
@@ -69,6 +77,11 @@ install(TARGETS
 
 install(TARGETS
   sas_core_example
+  DESTINATION bin/${PROJECT_NAME})
+
+
+install(TARGETS
+  sas_robot_driver_example
   DESTINATION bin/${PROJECT_NAME})
 
 if(BUILD_TESTING)
