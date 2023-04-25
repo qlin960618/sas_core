@@ -24,13 +24,13 @@ int main(int,char**)
     robot_driver_example.connect();
     robot_driver_example.initialize();
 
-    std::cout << "Initial joint positions: " << robot_driver_example.get_joint_positions() << std::endl;
+    std::cout << "Initial joint positions: " << robot_driver_example.get_joint_positions().transpose() << std::endl;
 
     VectorXd target_joint_positions = VectorXd::Random(7);
-    std::cout << "Target joint positions: " << target_joint_positions << std::endl;
+    std::cout << "Target joint positions: " << target_joint_positions.transpose() << std::endl;
 
     robot_driver_example.set_target_joint_positions(target_joint_positions);
-    std::cout << "Joint positions after change: " << robot_driver_example.get_joint_positions() << std::endl;
+    std::cout << "Joint positions after change: " << robot_driver_example.get_joint_positions().transpose() << std::endl;
 
     assert((target_joint_positions == robot_driver_example.get_joint_positions()));
 

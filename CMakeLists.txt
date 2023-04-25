@@ -73,16 +73,15 @@ install(
 
 install(TARGETS
   sas_clock_example
-  DESTINATION bin/${PROJECT_NAME})
+  DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS
   sas_core_example
-  DESTINATION bin/${PROJECT_NAME})
-
+  DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS
   sas_robot_driver_example
-  DESTINATION bin/${PROJECT_NAME})
+  DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
