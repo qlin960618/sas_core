@@ -37,7 +37,7 @@ struct RobotDriverExampleConfiguration
     VectorXd initial_joint_positions;
 };
 
-class RobotDriverExample: RobotDriver
+class RobotDriverExample: public RobotDriver
 {
 protected:
     const RobotDriverExampleConfiguration configuration_;
