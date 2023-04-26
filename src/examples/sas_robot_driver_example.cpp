@@ -28,7 +28,7 @@ sas::RobotDriverExample::RobotDriverExample(const RobotDriverExampleConfiguratio
     RobotDriver(break_loops),
     configuration_(configuration)
 {
-
+    set_joint_limits(configuration.joint_limits);
 }
 
 VectorXd sas::RobotDriverExample::get_joint_positions()
