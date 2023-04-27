@@ -41,9 +41,15 @@ void Object::_print_license_header(const std::string& class_name)
     std::cout << "************************************************************************" << std::endl;
 }
 
-Object::Object(const std::string &class_name)
+Object::Object(const std::string &class_name):
+    class_name_(class_name)
 {
     _print_license_header(class_name);
+}
+
+std::string sas::Object::get_class_name() const
+{
+    return class_name_;
 }
 
 

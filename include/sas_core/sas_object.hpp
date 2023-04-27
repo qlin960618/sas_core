@@ -30,9 +30,11 @@ namespace sas
 class Object
 {
 protected:
+    const std::string class_name_;
     void _print_license_header(const std::string& class_name);
     Object(const std::string& class_name);
 public:
     Object() = delete;
+    std::string get_class_name() const;
 };
 }
