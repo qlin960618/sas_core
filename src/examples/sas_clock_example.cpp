@@ -28,20 +28,33 @@
 
 int main(int, char**)
 {
-    //10 ms
+    // 10 ms
     sas::Clock clock(0.01);
+    //Alternatively, use sas::Clock clock(0.01,false); to disable automatic statistics calculation.
+    //They do not take much time, but might affect whatever it is that we're trying to time.
 
+    // Always initialize right before the loop, to reduce slowdown in the object allocation/initialization.
     clock.init();
     for(int i=0;i<50;i++)
     {
+        // Starting the loop with an update reduces overhead when entering the loop the first time.
         clock.update_and_sleep();
         std::cout << "Loop n = " << i << std::endl;
         std::cout << "  Elapsed time: " << clock.get_elapsed_time_sec() << std::endl;
-        std::cout << "  Computation time: " << clock.get_computation_time() << std::endl;
-        std::cout << "  Effective thread sampling time: " << clock.get_effective_thread_sampling_time_sec() << std::endl;
+
+        std::cout << "  Latest computation time: " << clock.get_time(sas::Clock::TimeType::Computational) << std::endl;
+        std::cout << "  Latest idle time: " << clock.get_time(sas::Clock::TimeType::Idle) << std::endl;
+        std::cout << "  Latest effective thread sampling time: " << clock.get_time(sas::Clock::TimeType::EffectiveSampling) << std::endl;
+
         std::cout << "  Desired thread sampling time: " << clock.get_desired_thread_sampling_time_sec() << std::endl;
         std::cout << "  Overrun count: " << clock.get_overrun_count() << std::endl << std::endl;
     }
+
+    //Statistics
+    std::cout << "Statistics for the entire loop" << std::endl;
+    std::cout << "  Mean computation time: " << clock.get_statistics(sas::Statistics::Mean,sas::Clock::TimeType::Computational) << std::endl;
+    std::cout << "  Mean idle time: " << clock.get_statistics(sas::Statistics::Mean,sas::Clock::TimeType::Idle) << std::endl;
+    std::cout << "  Mean effective thread sampling time: " << clock.get_statistics(sas::Statistics::Mean,sas::Clock::TimeType::EffectiveSampling) << std::endl;
 
     return 0;
 }

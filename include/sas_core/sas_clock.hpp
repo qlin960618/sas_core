@@ -89,6 +89,7 @@ public:
 
     long get_overrun_count() const;
 
+    double get_time(const TimeType& time_type) const;
     double get_statistics(const Statistics &statistics, const TimeType &time_type) const;
 };
 

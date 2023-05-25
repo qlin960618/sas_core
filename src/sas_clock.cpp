@@ -154,6 +154,13 @@ long Clock::get_overrun_count() const
     return overrun_sampling_time_count_;
 }
 
+double Clock::get_time(const TimeType &time_type) const
+{
+    return std::chrono::duration_cast<
+            std::chrono::duration<double>
+            >(kept_times_map_.at(time_type)).count();
+}
+
 double Clock::get_statistics(const Statistics& statistics, const TimeType& time_type) const
 {
     if(not enable_statistics_)
