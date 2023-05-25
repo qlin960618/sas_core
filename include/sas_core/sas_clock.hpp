@@ -1,6 +1,6 @@
 #pragma once
 /*
-# Copyright (c) 2016-2020 Murilo Marques Marinho
+# Copyright (c) 2016-2023 Murilo Marques Marinho
 #
 #    This file is part of sas_core.
 #
@@ -25,14 +25,22 @@
 
 #include <atomic>
 #include <chrono>
+#include <map>
 
 #include <sas_core/sas_object.hpp>
+#include <sas_core/sas_core.hpp>
 
 namespace sas
 {
 
 class Clock : private sas::Object
 {
+public:
+    enum class TimeType{
+        Computational,
+        EffectiveSampling,
+        Idle
+    };
 private:
 
     std::chrono::system_clock::time_point time_initial_;
@@ -41,42 +49,47 @@ private:
     std::chrono::system_clock::time_point time_before_sleep_;
     std::chrono::system_clock::time_point time_after_sleep_;
 
-    std::chrono::nanoseconds target_sampling_time_;
-    std::chrono::nanoseconds loop_duration_;
-    std::chrono::nanoseconds computation_duration_;
-    std::chrono::nanoseconds sleep_duration_;
+    const std::chrono::nanoseconds target_sampling_time_;
+
+    std::map<TimeType,std::chrono::nanoseconds> kept_times_map_;
+    //Formely
+    //std::chrono::nanoseconds loop_duration_;
+    //std::chrono::nanoseconds computation_duration_;
+    //std::chrono::nanoseconds sleep_duration_;
 
     long overrun_sampling_time_count_;
 
+    const bool enable_statistics_;
+
+    std::map<std::tuple<TimeType,Statistics>,std::tuple<std::chrono::nanoseconds,long>> statistics_map_;
+    void _compute_statistics_();
+
 public:
+
     Clock()=delete;
     Clock(const int&)=delete;
 
-    explicit Clock(const double& sampling_time_in_seconds);
+    explicit Clock(const double& sampling_time_in_seconds, const bool& enable_statistics=true);
 
     void init();
-
     void update_and_sleep();
+    double get_elapsed_time_sec() const;
 
     std::chrono::system_clock::time_point get_initial_time() const;
-
-    double get_sleep_time() const;
-
     std::chrono::system_clock::time_point get_last_update_time() const;
 
+    void safe_sleep_seconds(const double& seconds, std::atomic_bool* break_loop);
+    void blocking_sleep_seconds(const double& seconds);
+
     double get_computation_time() const;
+    double get_sleep_time() const;
+    double get_effective_thread_sampling_time_sec() const;
 
     double get_desired_thread_sampling_time_sec() const;
 
-    double get_effective_thread_sampling_time_sec() const;
-
-    double get_elapsed_time_sec() const;
-
-    void safe_sleep_seconds(const double& seconds, std::atomic_bool* break_loop);
-
-    void blocking_sleep_seconds(const double& seconds);
-
     long get_overrun_count() const;
+
+    double get_statistics(const Statistics &statistics, const TimeType &time_type) const;
 };
 
 }

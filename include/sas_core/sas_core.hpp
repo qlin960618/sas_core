@@ -30,6 +30,26 @@ using namespace Eigen;
 namespace sas
 {
 
+enum class Statistics{
+    Mean
+};
+
+template<class T>
+/**
+ * @brief incremental_mean a simple implementation of incremental mean, for the many cases in which
+ * keeping a vector of all values would be impractical.
+ * @param current_mean the current value of the mean.
+ * @param current_number_of_samples the current number of samples, not considering the new_sample.
+ * @param new_sample the new sample that will change the mean.
+ * @return the incremental mean, considering the new_sample.
+ */
+constexpr T incremental_mean(const T &current_mean, const int &current_number_of_samples, const T &new_sample)
+{
+    if(current_number_of_samples<0)
+        throw std::range_error("incremental_mean::current_number_of_samples should be larger than 0");
+    return (current_mean * current_number_of_samples + new_sample)/(current_number_of_samples+1);
+}
+
 VectorXd concatenate(const VectorXd& a, const VectorXd& b);
 VectorXd concatenate(const std::vector<VectorXd>& as);
 
