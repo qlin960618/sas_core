@@ -21,6 +21,13 @@
 #
 #   Author: Murilo M. Marinho, email: murilomarinho@ieee.org
 #
+# ################################################################
+#   Contributor:
+#      1. Quentin Lin (qlin1806@g.ecc.u-tokyo.ac.jp)
+#       - Porting original Juan Jose Quiroz Omana (juanjqogm@gmail.com) implementation in ROS1
+#         - [2024/08/12] Added the methods get_joint_velocities(),
+#                        get_joint_forces(), and set_target_joint_velocities().
+#
 # ################################################################*/
 
 #include <exception>
@@ -62,6 +69,12 @@ public:
 
     virtual void initialize()=0;
     virtual void deinitialize()=0;
+
+    virtual VectorXd get_joint_velocities() = 0;
+    virtual void set_target_joint_velocities(const VectorXd& set_target_joint_velocities_rad_per_second) = 0;
+
+    virtual VectorXd get_joint_forces() = 0;
+
 };
 }
 
