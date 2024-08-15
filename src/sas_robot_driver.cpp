@@ -39,7 +39,7 @@ RobotDriver::RobotDriver(std::atomic_bool *break_loops):
 
 }
 
-std::tuple<VectorXd, VectorXd> RobotDriver::get_joint_limits() const
+std::tuple<VectorXd, VectorXd> RobotDriver::get_joint_limits()
 {
     return joint_limits_;
 }
@@ -47,6 +47,36 @@ std::tuple<VectorXd, VectorXd> RobotDriver::get_joint_limits() const
 void RobotDriver::set_joint_limits(const std::tuple<VectorXd, VectorXd> &joint_limits)
 {
     joint_limits_ = joint_limits;
+}
+
+
+/**
+ * @brief This method returns the joint velocities.
+ * @return A vector containing the joint velocities.
+ */
+VectorXd RobotDriver::get_joint_velocities()
+{
+    return joint_velocities_;
+}
+
+
+/**
+ * @brief This method returns the joint torques.
+ * @return A vector containing the joint torques.
+ */
+VectorXd RobotDriver::get_joint_forces()
+{
+    return joint_forces_;
+}
+
+
+/**
+ * @brief This method sets the desired target joint velocities.
+ * @param The desired target joint velocities.
+ */
+void RobotDriver::set_target_joint_velocities(const VectorXd &set_target_joint_velocities_rad_per_second)
+{
+    desired_joint_velocities_ = set_target_joint_velocities_rad_per_second;
 }
 
 }
