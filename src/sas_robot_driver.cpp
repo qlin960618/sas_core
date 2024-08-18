@@ -55,7 +55,7 @@ VectorXd RobotDriver::get_joint_velocities() {
 }
 
 void RobotDriver::set_target_joint_velocities(const VectorXd& set_target_joint_velocities_rad_per_second) {
-    joint_velocities_ = set_target_joint_velocities_rad_per_second;
+    desired_joint_velocities_  = set_target_joint_velocities_rad_per_second;
 }
 
 VectorXd RobotDriver::get_joint_forces() {

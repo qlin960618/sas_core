@@ -46,6 +46,7 @@ protected:
     std::tuple<VectorXd, VectorXd> joint_limits_;
 
     VectorXd joint_velocities_;
+    VectorXd desired_joint_velocities_;
     VectorXd joint_forces_;
     RobotDriver(std::atomic_bool* break_loops);
 
