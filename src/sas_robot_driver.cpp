@@ -49,4 +49,17 @@ void RobotDriver::set_joint_limits(const std::tuple<VectorXd, VectorXd> &joint_l
     joint_limits_ = joint_limits;
 }
 
+
+VectorXd RobotDriver::get_joint_velocities() {
+    return joint_velocities_;
+}
+
+void RobotDriver::set_target_joint_velocities(const VectorXd& set_target_joint_velocities_rad_per_second) {
+    joint_velocities_ = set_target_joint_velocities_rad_per_second;
+}
+
+VectorXd RobotDriver::get_joint_forces() {
+    return joint_forces_;
+}
+
 }
